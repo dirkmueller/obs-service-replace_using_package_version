@@ -1,7 +1,7 @@
 #
-# spec file
+# spec file for package obs-service-replace_using_package_version
 #
-# Copyright (c) 2023 SUSE LLC
+# Copyright (c) 2026 SUSE LLC and contributors
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -17,7 +17,6 @@
 
 
 %define service replace_using_package_version
-
 Name:           obs-service-%{service}
 Version:        0.0.12
 Release:        0
@@ -29,9 +28,9 @@ Source0:        %{service}.py
 Source1:        %{service}.service
 Source2:        LICENSE
 BuildRequires:  sed
+Requires:       /usr/bin/python3
 Requires:       python3-docopt
 Requires:       python3-rpm
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
 
 %description
@@ -40,9 +39,9 @@ a given package. Can be used to align the version of you package or image
 to the version of another package.
 
 %prep
-cp %{S:0} .
-cp %{S:1} .
-cp %{S:2} .
+cp %{SOURCE0} .
+cp %{SOURCE1} .
+cp %{SOURCE2} .
 
 %build
 # intentionally blank - nothing to do
@@ -53,7 +52,6 @@ install -D -m 755 %{service}.py %{buildroot}%{_prefix}/lib/obs/service/%{service
 install -D -m 644 %{service}.service %{buildroot}%{_prefix}/lib/obs/service/%{service}.service
 
 %files
-%defattr(-,root,root)
 %dir %{_prefix}/lib/obs
 %dir %{_prefix}/lib/obs/service
 %{_prefix}/lib/obs/service
